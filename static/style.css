@@ -1,0 +1,24 @@
+:root{--bg:#f2f5f9;--card:#fff;--ink:#14243a;--mut:#5d6f86;--line:#dbe3ed;--pri:#0b5ed7;--acc:#f5a623;--hd:#0b1d33}
+@media(prefers-color-scheme:dark){:root{--bg:#0a1524;--card:#12223a;--ink:#e6edf7;--mut:#8fa3bd;--line:#223552;--pri:#4d94ff;--hd:#06101d}}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:var(--hd);color:#fff;padding:calc(18px + env(safe-area-inset-top)) 20px 18px;border-bottom:3px solid var(--acc)}
+header h1{margin:0;font-size:1.25rem}header p{margin:4px 0 0;color:#9db4d1;font-size:.85rem}
+main{max-width:1000px;margin:0 auto;padding:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:16px}
+.card h2{margin:0 0 12px;font-size:1rem;color:var(--pri)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+label{font-size:.78rem;color:var(--mut);display:block;margin-bottom:4px}
+input,select{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font-size:1rem}
+input:focus,select:focus{outline:2px solid var(--pri)}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+button{padding:12px 20px;border:0;border-radius:10px;font-size:1rem;font-weight:600;cursor:pointer}
+.go{background:var(--pri);color:#fff;flex:1}.ex{background:transparent;border:1px solid var(--line);color:var(--ink)}
+#err{display:none;background:#fde8e8;color:#9b1c1c;padding:12px;border-radius:10px;margin-bottom:16px}
+#out{display:none}
+.res{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.row{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px dashed var(--line);font-size:.9rem}
+.row:last-child{border:0}.row span:first-child{color:var(--mut)}.row span:last-child{font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+.tabs{display:flex;gap:8px;margin-bottom:10px}.tab{padding:8px 14px;border-radius:20px;background:var(--bg);border:1px solid var(--line);color:var(--ink);font-size:.85rem}
+.tab.on{background:var(--pri);color:#fff;border-color:var(--pri)}
+svg{width:100%;height:auto}svg text{fill:var(--ink);font-size:12px;font-family:system-ui}svg .w{stroke:var(--ink);stroke-width:2;fill:none}svg .c{fill:var(--bg);stroke:var(--pri);stroke-width:2}
+details{margin-top:8px;color:var(--mut);font-size:.82rem}
