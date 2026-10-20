@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-<header><h1>Calculadora de Transformadores</h1><p>Circuito equivalente, carga, pérdidas, eficiencia y regulación</p></header>
+<header><h1>Calculadora de Transformadores</h1><p>Máquinas Eléctricas:Producto Integrador de Aprendizaje</p></header>
 <main>
 <form id="f">
  <div class="card"><h2>Datos del transformador</h2><div class="grid">
@@ -19,12 +19,12 @@
   <div><label>Voltaje N2 (V)</label><input name="v2" type="number" step="any" required></div>
   <div><label>Frecuencia (Hz)</label><input name="f" type="number" step="any" value="60" required></div>
  </div></div>
- <div class="card"><h2>Prueba de corto circuito (lado N1)</h2><div class="grid">
+ <div class="card"><h2>Prueba de corto circuito.</h2><div class="grid">
   <div><label>Icc (A)</label><input name="icc" type="number" step="any" required></div>
   <div><label>Vcc (V)</label><input name="vcc" type="number" step="any" required></div>
   <div><label>Pcc (W)</label><input name="pcc" type="number" step="any" required></div>
  </div></div>
- <div class="card"><h2>Prueba de vacío (lado N2)</h2><div class="grid">
+ <div class="card"><h2>Prueba de vacío.</h2><div class="grid">
   <div><label>I0 (A)</label><input name="i0" type="number" step="any" required></div>
   <div><label>V0 (V)</label><input name="v0" type="number" step="any" required></div>
   <div><label>P0 (W)</label><input name="p0" type="number" step="any" required></div>
@@ -37,7 +37,7 @@
   <div><label>Horas al mes</label><input name="horas" type="number" step="any" value="720"></div>
   <div><label>Convención de ángulos</label><select name="convencion"><option value="resta">Ángulo entre fasores (recomendada)</option><option value="suma">Suma literal (°E1+°Iexc)</option></select></div>
  </div>
- <details><summary>Notas</summary>VL se toma como el voltaje N2 con ángulo 0°. La carga consume la potencia en kVA del transformador. “Ángulo entre fasores” usa |°E1 − °Iexc| y |°Σ1 − °I1|, que da resultados físicamente coherentes. “Suma literal” suma los ángulos con su signo tal cual.</details></div>
+ <details><summary>Notas</summary>“Ángulo entre fasores” usa |°E1 − °Iexc| y |°Σ1 − °I1|, que da resultados físicamente coherentes. “Suma literal” suma los ángulos con su signo tal cual.</details></div>
  <div class="btns"><button class="go" type="submit">Calcular</button><button class="ex" type="button" id="demo">Cargar ejemplo</button></div>
 </form>
 <br><div id="err"></div>
