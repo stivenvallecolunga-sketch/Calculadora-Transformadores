@@ -52,7 +52,8 @@ def solve(d):
     Xmp = math.sqrt(arg0) - XLX                  # X'LMCH
     RCH, XLMCH = a**2 * Rcp, a**2 * Xmp
 
-    params = dict(a=a, RH=RH, XLH=XLH, RX=RX, XLX=XLX, Rcp=Rcp, Xmp=Xmp, RCH=RCH, XLMCH=XLMCH)
+    params = dict(a=a, RH=RH, XLH=XLH, RX=RX, XLX=XLX, Rcp=Rcp, Xmp=Xmp, RCH=RCH, XLMCH=XLMCH,
+                  RXp=a**2 * RX, XLXp=a**2 * XLX, RHp=RH / a**2, XLHp=XLH / a**2)
 
     # ---------- b) Corriente de carga ----------
     theta = math.degrees(math.acos(fp))
