@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,44 +11,90 @@
 <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-<header><h1>Calculadora de Transformadores</h1><p>Máquinas Eléctricas:Producto Integrador de Aprendizaje</p></header>
+<header>
+  <h1>Calculador para Análisis de Transformadores</h1>
+  <p>Circuito equivalente, carga, pérdidas, eficiencia y regulación.</p>
+</header>
+
 <main>
 <form id="f">
- <div class="card"><h2>Datos del transformador</h2><div class="grid">
-  <div><label>Potencia (kVA)</label><input name="kva" type="number" step="any" required></div>
-  <div><label>Voltaje N1 (V)</label><input name="v1" type="number" step="any" required></div>
-  <div><label>Voltaje N2 (V)</label><input name="v2" type="number" step="any" required></div>
-  <div><label>Frecuencia (Hz)</label><input name="f" type="number" step="any" value="60" required></div>
- </div></div>
- <div class="card"><h2>Prueba de corto circuito.</h2><div class="grid">
-  <div><label>Icc (A)</label><input name="icc" type="number" step="any" required></div>
-  <div><label>Vcc (V)</label><input name="vcc" type="number" step="any" required></div>
-  <div><label>Pcc (W)</label><input name="pcc" type="number" step="any" required></div>
- </div></div>
- <div class="card"><h2>Prueba de vacío.</h2><div class="grid">
-  <div><label>I0 (A)</label><input name="i0" type="number" step="any" required></div>
-  <div><label>V0 (V)</label><input name="v0" type="number" step="any" required></div>
-  <div><label>P0 (W)</label><input name="p0" type="number" step="any" required></div>
- </div></div>
- <div class="card"><h2>Carga y tarifas</h2><div class="grid">
-  <div><label>Factor de potencia</label><input name="fp" type="number" step="any" min="-1" max="1" value="0.8" required></div>
-  <div><label>Tarifa ($/kWh)</label><input name="tarifa" type="number" step="any" value="2.6"></div>
-  <div><label>IVA (factor)</label><input name="iva" type="number" step="any" value="1.16"></div>
-  <div><label>kg CO₂ por kWh</label><input name="co2" type="number" step="any" value="0.482"></div>
-  <div><label>Horas al mes</label><input name="horas" type="number" step="any" value="720"></div>
-  <div><label>Convención de ángulos</label><select name="convencion"><option value="resta">Ángulo entre fasores (recomendada)</option><option value="suma">Suma literal (°E1+°Iexc)</option></select></div>
- </div>
- <details><summary>Notas</summary>“Ángulo entre fasores” usa |°E1 − °Iexc| y |°Σ1 − °I1|, que da resultados físicamente coherentes. “Suma literal” suma los ángulos con su signo tal cual.</details></div>
- <div class="btns"><button class="go" type="submit">Calcular</button><button class="ex" type="button" id="demo">Cargar ejemplo</button></div>
+  <div class="card"><h2>Datos del transformador:</h2><div class="grid">
+    <div><label>Potencia (kVA)</label><input name="kva" type="number" step="any" required></div>
+    <div><label>Voltaje N1 (V)</label><input name="v1" type="number" step="any" required></div>
+    <div><label>Voltaje N2 (V)</label><input name="v2" type="number" step="any" required></div>
+    <div><label>Frecuencia (Hz)</label><input name="f" type="number" step="any" value="60" required></div>
+  </div></div>
+
+  <div class="card"><h2>Prueba de corto circuito:</h2><div class="grid">
+    <div><label>Icc (A)</label><input name="icc" type="number" step="any" required></div>
+    <div><label>Vcc (V)</label><input name="vcc" type="number" step="any" required></div>
+    <div><label>Pcc (W)</label><input name="pcc" type="number" step="any" required></div>
+  </div></div>
+
+  <div class="card"><h2>Prueba de vacío:</h2><div class="grid">
+    <div><label>I0 (A)</label><input name="i0" type="number" step="any" required></div>
+    <div><label>V0 (V)</label><input name="v0" type="number" step="any" required></div>
+    <div><label>P0 (W)</label><input name="p0" type="number" step="any" required></div>
+  </div></div>
+
+  <div class="card"><h2>Carga y tarifas:</h2><div class="grid">
+    <div><label>Factor de potencia</label><input name="fp" type="number" step="any" min="-1" max="1" value="0.8" required></div>
+    <div><label>Tarifa ($/kWh)</label><input name="tarifa" type="number" step="any" value="2.6"></div>
+    <div><label>IVA (factor)</label><input name="iva" type="number" step="any" value="1.16"></div>
+    <div><label>kg CO₂ por kWh</label><input name="co2" type="number" step="any" value="0.482"></div>
+    <div><label>Horas al mes</label><input name="horas" type="number" step="any" value="720"></div>
+    <div><label>Convención de ángulos</label>
+      <select name="convencion">
+        <option value="suma">Suma (°E1+°Iexc)</option>
+        <option value="resta">Ángulo entre fasores (|°E1 − °Iexc|)-> Recomendada.</option>
+      </select></div>
+  </div>
+  <details><summary>Notas:Considere cada dato tanto signo como punto decimal del valor que desea agregar del transformador.</summary></details></div>
+
+  <div class="btns">
+    <button class="go" type="submit">Calcular</button>
+    <button class="ex" type="button" id="demo">Cargar ejemplo</button>
+  </div>
 </form>
-<br><div id="err"></div>
+
+<div id="err"></div>
+
 <div id="out">
- <div class="card"><h2>Circuito equivalente</h2>
-  <div class="tabs"><button class="tab on" data-s="p" type="button">Referido al primario</button><button class="tab" data-s="s" type="button">Referido al secundario</button></div>
-  <div id="svg"></div></div>
- <div class="res" id="res"></div>
+  <div class="card">
+    <h2>Circuitos equivalentes</h2>
+    <p class="hint">Desliza o usa las flechas para cambiar de circuito. Abajo de cada uno están los valores de sus incógnitas.</p>
+    <div class="carousel">
+      <button class="nav prev" type="button" aria-label="Anterior">‹</button>
+      <div class="slides" id="slides"></div>
+      <button class="nav next" type="button" aria-label="Siguiente">›</button>
+    </div>
+    <div class="dots" id="dots"></div>
+  </div>
+  <div class="res" id="res"></div>
 </div>
+
+<section class="about">
+  <div class="card">
+    <h2>Sobre mí</h2>
+    <p>Soy estudiante de la <strong>Facultad de Ingeniería Mecánica Eléctrica</strong> y curso la carrera de <strong>Ingeniería en Automatización y Sistemas Inteligentes</strong>, actualmente en <strong>quinto semestre</strong>. Me apasiona unir la electricidad, la programación y la automatización para convertir los problemas de clase en herramientas que cualquier persona pueda usar.</p>
+  </div>
+  <div class="card">
+    <h2>Sobre este software</h2>
+    <p>Es una calculadora de <strong>transformadores monofásicos</strong> pensada para estudiantes de máquinas eléctricas. A partir de los datos de placa y de las pruebas de <em>corto circuito</em> y <em>vacío</em>, resuelve el problema completo en un solo paso.</p>
+    <ul>
+      <li><strong>Parámetros del circuito:</strong> relación de transformación, RH, XLH, RX, XLX, RCH y XLMCH.</li>
+      <li><strong>Circuitos equivalentes:</strong> general, referido al primario y referido al secundario, con el valor de cada elemento.</li>
+      <li><strong>Carga:</strong> corriente, impedancia, energía mensual, importe en pesos y emisiones de CO₂.</li>
+      <li><strong>Núcleo y bobinas:</strong> rama de excitación, corrientes de magnetización y de pérdidas, y pérdidas en el cobre.</li>
+      <li><strong>Desempeño:</strong> voltaje y factor de potencia a la entrada, eficiencia y regulación de voltaje.</li>
+    </ul>
+    <p>Los cálculos se hacen en <strong>Python</strong> con precisión completa, sin redondeos intermedios. La interfaz está hecha con <strong>HTML, CSS y JavaScript</strong> y funciona como página web y como aplicación instalable en el celular.</p>
+    <p class="mut">Úsalo como apoyo para estudiar y comprobar tus resultados.</p>
+  </div>
+</section>
 </main>
+
+<footer>Calculadora de Transformadores · Máquinas Eléctricas</footer>
 <script src="/app.js"></script>
 </body>
 </html>
