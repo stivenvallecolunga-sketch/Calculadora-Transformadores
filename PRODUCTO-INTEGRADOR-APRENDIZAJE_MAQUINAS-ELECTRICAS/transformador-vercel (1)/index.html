@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f5132">
+<meta name="description" content="Circuito equivalente, pérdidas, eficiencia y regulación de un transformador monofásico a partir de las pruebas de vacío y corto circuito.">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400..800&display=swap" rel="stylesheet">
+<title>Análisis de transformadores monofásicos</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="sheet">
+
+<header class="head">
+ <h1>Análisis de transformadores monofásicos</h1>
+ <p>Escribe los datos de la placa y de las pruebas de corto circuito y de vacío.</p>
+ <p class="materia">Máquinas Eléctricas, FIME-UANL.</p>
+</header>
+
+<div class="layout">
+<form id="f" class="datos" autocomplete="off">
+ <fieldset>
+  <legend>Datos de placa</legend>
+  <label><span>Potencia</span><input name="kva" type="number" step="any" inputmode="decimal" required><i>kVA</i></label>
+  <label><span>Voltaje N1</span><input name="v1" type="number" step="any" inputmode="decimal" required><i>V</i></label>
+  <label><span>Voltaje N2</span><input name="v2" type="number" step="any" inputmode="decimal" required><i>V</i></label>
+  <label><span>Frecuencia</span><input name="f" type="number" step="any" inputmode="decimal" value="60" required><i>Hz</i></label>
+ </fieldset>
+
+ <fieldset>
+  <legend>Prueba de corto circuito <small>medida en N1</small></legend>
+  <label><span>Icc</span><input name="icc" type="number" step="any" inputmode="decimal" required><i>A</i></label>
+  <label><span>Vcc</span><input name="vcc" type="number" step="any" inputmode="decimal" required><i>V</i></label>
+  <label><span>Pcc</span><input name="pcc" type="number" step="any" inputmode="decimal" required><i>W</i></label>
+ </fieldset>
+
+ <fieldset>
+  <legend>Prueba de vacío <small>medida en N2</small></legend>
+  <label><span>I0</span><input name="i0" type="number" step="any" inputmode="decimal" required><i>A</i></label>
+  <label><span>V0</span><input name="v0" type="number" step="any" inputmode="decimal" required><i>V</i></label>
+  <label><span>P0</span><input name="p0" type="number" step="any" inputmode="decimal" required><i>W</i></label>
+ </fieldset>
+
+ <fieldset>
+  <legend>Carga</legend>
+  <label><span>Factor de potencia</span><input name="fp" type="number" step="any" min="0" max="1" inputmode="decimal" value="0.8" required><i></i></label>
+ </fieldset>
+
+ <details class="mas">
+  <summary>Tarifa y emisiones</summary>
+  <fieldset>
+   <label><span>Tarifa</span><input name="tarifa" type="number" step="any" inputmode="decimal" value="2.6"><i>$/kWh</i></label>
+   <label><span>IVA</span><input name="iva" type="number" step="any" inputmode="decimal" value="1.16"><i>factor</i></label>
+   <label><span>Emisión</span><input name="co2" type="number" step="any" inputmode="decimal" value="0.482"><i>kg/kWh</i></label>
+   <label><span>Horas al mes</span><input name="horas" type="number" step="any" inputmode="decimal" value="720"><i>h</i></label>
+   <p class="nota">VL es el voltaje de N2 a 0°, y la carga toma los kVA nominales.</p>
+  </fieldset>
+ </details>
+
+ <div class="acciones">
+  <button class="calc" type="submit">Calcular</button>
+  <button class="ej" type="button" id="demo">Usar ejemplo de 25 kVA</button>
+ </div>
+ <p id="err" role="alert" hidden></p>
+</form>
+
+<section class="hoja" id="out" aria-live="polite">
+ <div class="vacio" id="vacio">
+  <p>Los resultados aparecen aquí.</p>
+  <p>¿Solo quieres probar? Usa el ejemplo de 25 kVA, 2400/240 V.</p>
+ </div>
+
+ <div id="res" hidden>
+  <figure class="circ">
+   <figcaption>
+    <span>Circuito equivalente</span>
+    <span class="lado" role="tablist">
+     <button type="button" data-s="p" aria-pressed="true">Referido al primario</button>
+     <button type="button" data-s="s" aria-pressed="false">Referido al secundario</button>
+    </span>
+   </figcaption>
+   <div id="svg"></div>
+   <p class="desliza">Desliza el diagrama a los lados para verlo completo.</p>
+  </figure>
+
+  <div class="barra">
+   <span>Decimales</span>
+   <button type="button" data-d="all" aria-pressed="true">Todos</button>
+   <button type="button" data-d="4" aria-pressed="false">4</button>
+   <button type="button" id="copiar">Copiar resultados</button>
+  </div>
+
+  <ol id="pasos" class="pasos"></ol>
+ </div>
+</section>
+</div>
+
+<footer class="sobre" id="sobre-mi">
+ <div>
+  <h2>Sobre mí</h2>
+  <p class="nombre">Stiven Gael Valle Colunga</p>
+  <p class="carrera">Ingeniería en Automatización y Sistemas Inteligentes, quinto semestre</p>
+ </div>
+ <div>
+  <p class="motivo">Esta calculadora es mi Producto Integrador de Aprendizaje de Máquinas Eléctricas. Analizar un transformador es un problema largo, con muchos pasos encadenados; aquí se reduce a escribir los datos de las pruebas y obtener el resultado completo.</p>
+  <p class="motivo">Como ingenieros, nuestro trabajo está en el análisis. Las herramientas actuales nos permiten resolver más rápido para dedicarle ese tiempo a entender e interpretar lo que los números dicen.</p>
+  <p class="chica">Facultad de Ingeniería Mecánica y Eléctrica, UANL. Los resultados se calculan con doble precisión; compáralos siempre con tu procedimiento.</p>
+ </div>
+</footer>
+</div>
+<script src="/app.js"></script>
+</body>
+</html>
